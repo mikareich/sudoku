@@ -1,0 +1,16 @@
+html, body {
+    margin: 0;
+}
+
+#sudoku, td {
+    margin: 20px auto;
+    border: 1px solid black;
+    border-collapse: collapse;
+    font-size: 18pt;
+}
+
+td {
+    width: 50px;
+    height: 50px;
+    text-align: center;
+}
