@@ -2,6 +2,7 @@ const sudokuTable = document.getElementById("sudoku");
 const sudokuTablesAsArray = Array.from(document.getElementsByTagName("td"));
 var change = true;
 var solved = false;
+var values
 const blocks = [
   {
     options: [1, 2, 3, 4, 5, 6, 7, 8, 9],
@@ -58,34 +59,6 @@ const blocks = [
     column: 6
   }
 ];
-var values = sudokuTablesAsArray.map(child => {
-  const positionAsNumber = sudokuTablesAsArray.indexOf(child) / 9;
-  // Position in Sudoku
-  const position = {
-    column: Math.floor((positionAsNumber - Math.floor(positionAsNumber)) * 10),
-    line: Math.floor(positionAsNumber),
-    block: undefined
-  };
-  // Block in Sudoku
-  blocks.forEach(block => {
-    if (
-      position.line >= block.line &&
-      position.line <= block.line + 3 &&
-      position.column >= block.column &&
-      position.column <= block.column + 3
-    ) {
-      position.block = block;
-    }
-  });
-  const field = {
-    position: position,
-    value: parseInt(child.innerHTML) || null,
-    options: [1, 2, 3, 4, 5, 6, 7, 8, 9],
-    dom: child
-  };
-  field.position.block.fields.push(field);
-  return field;
-});
 
 function getPossibleNumbers(field1, area) {
   // Zahlen in Zeile ausgeben
@@ -126,15 +99,47 @@ function solve(field) {
   return field;
 }
 function start() {
-  const startTime = new Date().getTime()
-  while (change && !solved) {
+  values = sudokuTablesAsArray.map(child => {
+    const positionAsNumber = sudokuTablesAsArray.indexOf(child) / 9;
+    // Position in Sudoku
+    const position = {
+      column: Math.floor(
+        (positionAsNumber - Math.floor(positionAsNumber)) * 10
+      ),
+      line: Math.floor(positionAsNumber),
+      block: undefined
+    };
+    // Block in Sudoku
+    blocks.forEach(block => {
+      if (
+        position.line >= block.line &&
+        position.line <= block.line + 3 &&
+        position.column >= block.column &&
+        position.column <= block.column + 3
+      ) {
+        position.block = block;
+      }
+    });
+    const field = {
+      position: position,
+      value: parseInt(child.innerHTML) || null,
+      options: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+      dom: child
+    };
+    field.position.block.fields.push(field);
+    return field;
+  });
+  const startTime = new Date().getTime();
+  while (!solved) {
     change = false;
     values.forEach((value, index, array) => {
       array[index] = solve(value);
+      if (index == array.length - 1 && !change) return;
     });
     if (values.filter(n => n.value == null).length == 0) {
       solved = true;
-      document.getElementById("resultTime").innerText = new Date().getTime() - startTime
+      document.getElementById("resultTime").innerText =
+        new Date().getTime() - startTime;
     }
   }
 }
