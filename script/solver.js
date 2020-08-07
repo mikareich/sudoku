@@ -21,14 +21,12 @@ class SudokuSolver {
   split() {
     // sudoku should be given in rows
     this.rows = this.sudoku;
-    let cellIndex = 0;
 
     for (let x = 0; x < 9; x++) {
       for (let y = 0; y < 9; y++) {
         // get cell
         let cell = this.sudoku[x][y];
         cell = cell === 0 ? null : cell;
-        console.log({ x, y });
 
         // add item to colum
         this.columns[y][x] = cell;
@@ -44,10 +42,10 @@ class SudokuSolver {
           y - Y_Block * 3
         );
         block[indexInBlock] = cell;
-
-        cellIndex++;
       }
     }
+
+    return { blocks: this.blocks, columns: this.columns, rows: this.rows };
   }
 
   solve() {
