@@ -7,6 +7,24 @@ const sudokuPlain = [
   0, 7, 9,
 ]
 
+test('Sudoku returns correct units of cell with given plain index', () => {
+  const sudoku = new Sudoku(sudokuPlain)
+  const units = sudoku.getUnitsByPlainIndex(12)
+
+  expect(units.row).toEqual([6, 0, 0, 1, 9, 5, 0, 0, 0])
+  expect(units.col).toEqual([0, 1, 0, 0, 8, 0, 0, 4, 0])
+  expect(units.block).toEqual([0, 7, 0, 1, 9, 5, 0, 0, 0])
+})
+
+test('Sudoku returns correct untis of cell with given row and col index', () => {
+  const sudoku = new Sudoku(sudokuPlain)
+  const units = sudoku.getUnitsByRowCol(1, 3)
+
+  expect(units.row).toEqual([6, 0, 0, 1, 9, 5, 0, 0, 0])
+  expect(units.col).toEqual([0, 1, 0, 0, 8, 0, 0, 4, 0])
+  expect(units.block).toEqual([0, 7, 0, 1, 9, 5, 0, 0, 0])
+})
+
 test('Format plain to rows', () => {
   const rows = Sudoku.formatToRows(sudokuPlain)
   expect(rows).toStrictEqual([

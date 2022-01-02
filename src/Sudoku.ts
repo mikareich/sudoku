@@ -2,30 +2,6 @@ type Unit = number[]
 
 /** Interprets and splits sudoku */
 class Sudoku {
-  /** Plain number sequence of the sudoku. Basically all sudoku rows side by side. */
-  public plain: Unit = []
-
-  /** Rows of sudoku as two-dimensional array */
-  public rows: Unit[] = []
-
-  /** Cols of sudoku as two-dimensional array */
-  public cols: Unit[] = []
-
-  /** Blocks of sudoku as two-dimensional array */
-  public blocks: Unit[] = []
-
-  /**
-   * Interprets and splits sudoku
-   * @param plain Plain number sequence of the sudoku. Basically all sudoku rows side by side.
-   */
-  constructor(plain: Unit) {
-    this.plain = plain
-
-    this.rows = Sudoku.formatToRows(plain)
-    this.cols = Sudoku.formatToCols(plain)
-    this.blocks = Sudoku.formatToBlocks(plain)
-  }
-
   /**
    * Format plain number sequence to rows
    *
@@ -98,6 +74,64 @@ class Sudoku {
       blocks.push(block)
     }
     return blocks
+  }
+
+  /** Plain number sequence of the sudoku. Basically all sudoku rows side by side. */
+  public plain: Unit = []
+
+  /** Rows of sudoku as two-dimensional array */
+  public rows: Unit[] = []
+
+  /** Cols of sudoku as two-dimensional array */
+  public cols: Unit[] = []
+
+  /** Blocks of sudoku as two-dimensional array */
+  public blocks: Unit[] = []
+
+  /**
+   * Interprets and splits sudoku
+   * @param plain Plain number sequence of the sudoku. Basically all sudoku rows side by side.
+   */
+  constructor(plain: Unit) {
+    this.plain = plain
+
+    this.rows = Sudoku.formatToRows(plain)
+    this.cols = Sudoku.formatToCols(plain)
+    this.blocks = Sudoku.formatToBlocks(plain)
+  }
+
+  /**
+   * Returns units of the cell
+   * @param plainIndex Index of the cell in plain number sequence
+   * @returns The units of the cell
+   */
+  public getUnitsByPlainIndex(plainIndex: number) {
+    const rowIndex = Math.floor(plainIndex / 9)
+    const colIndex = plainIndex % 9
+    const blockIndex =
+      Math.floor(plainIndex / 27) * 3 + (Math.floor(plainIndex / 3) % 3)
+
+    return {
+      row: this.rows[rowIndex],
+      col: this.cols[colIndex],
+      block: this.blocks[blockIndex],
+    }
+  }
+
+  /**
+   * Returns the units of the cell
+   * @param rowIndex Row index of the cell
+   * @param colIndex Column index of the cell
+   * @returns The units of the cell
+   */
+  public getUnitsByRowCol(rowIndex: number, colIndex: number) {
+    const blockIndex = Math.floor(rowIndex / 3) * 3 + Math.floor(colIndex / 3)
+
+    return {
+      row: this.rows[rowIndex],
+      col: this.cols[colIndex],
+      block: this.blocks[blockIndex],
+    }
   }
 }
 
