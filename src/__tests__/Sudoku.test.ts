@@ -4,7 +4,14 @@ import {
   formatedCols,
   formatedRows,
   sudokuPlain,
+  sudokuSolvedPlain,
 } from './SudokuPlain'
+
+test('Solved property', () => {
+  const sudoku = new Sudoku(sudokuSolvedPlain)
+
+  expect(sudoku.solved).toStrictEqual(true)
+})
 
 test('Sudoku returns correct units of cell with given plain index', () => {
   const sudoku = new Sudoku(sudokuPlain)

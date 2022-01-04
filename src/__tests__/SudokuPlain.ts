@@ -217,6 +217,7 @@ export const formatedCols: Unit[] = [
     { value: 9, candidates: [] },
   ],
 ]
+
 export const formatedBlocks: Unit[] = [
   [
     { value: 5, candidates: [] },

@@ -139,6 +139,27 @@ class Sudoku {
     this.blocks = Sudoku.formatToBlocks(plain)
   }
 
+  /** Indicates whether the sudoku is solved */
+  get solved() {
+    const sortAndStringify = (unit: Unit) =>
+      JSON.stringify(Sudoku.getDigitSet(unit).sort())
+    const numberSequenceStringified = JSON.stringify(Sudoku.DIGIT_SET)
+
+    const rowsFilled = this.rows
+      .map(sortAndStringify)
+      .every((row) => row === numberSequenceStringified)
+
+    const colsFilled = this.cols
+      .map(sortAndStringify)
+      .every((col) => col === numberSequenceStringified)
+
+    const blocksFilled = this.blocks
+      .map(sortAndStringify)
+      .every((block) => block === numberSequenceStringified)
+
+    return rowsFilled && colsFilled && blocksFilled
+  }
+
   /**
    * Returns units of the cell
    * @param plainIndex Index of the cell in plain digit set

@@ -1,4 +1,4 @@
-import Sudoku, { Unit } from './Sudoku'
+import Sudoku, { DigitSetWithZero, Unit } from './Sudoku'
 
 class Solver {
   /** Sudoku to solve */
@@ -6,29 +6,6 @@ class Solver {
 
   constructor(sudoku: Sudoku) {
     this.sudoku = sudoku
-  }
-
-  /** Indicates whether the sudoku is solved */
-  get solved() {
-    const { rows, cols, blocks } = this.sudoku
-
-    const sortAndStringify = (unit: Unit) =>
-      JSON.stringify(Sudoku.getDigitSet(unit).sort())
-    const numberSequenceStringified = JSON.stringify(Sudoku.DIGIT_SET)
-
-    const rowsFilled = rows
-      .map(sortAndStringify)
-      .every((row) => row === numberSequenceStringified)
-
-    const colsFilled = cols
-      .map(sortAndStringify)
-      .every((col) => col === numberSequenceStringified)
-
-    const blocksFilled = blocks
-      .map(sortAndStringify)
-      .every((block) => block === numberSequenceStringified)
-
-    return rowsFilled && colsFilled && blocksFilled
   }
 
   /**

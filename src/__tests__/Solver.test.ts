@@ -1,13 +1,6 @@
 import Solver from '../Solver'
 import Sudoku from '../Sudoku'
-import { sudokuPlain, sudokuSolvedPlain } from './SudokuPlain'
-
-test('Solved property', () => {
-  const sudokuSolved = new Sudoku(sudokuSolvedPlain)
-  const solver = new Solver(sudokuSolved)
-
-  expect(solver.solved).toStrictEqual(true)
-})
+import { sudokuPlain } from './SudokuPlain'
 
 test('Exact Cover method', () => {
   const sudoku = new Sudoku(sudokuPlain)
