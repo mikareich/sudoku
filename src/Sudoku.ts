@@ -1,14 +1,12 @@
-type Unit = (1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9)[]
+export type Unit = (0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9)[]
 
 /** Interprets and splits sudoku */
 class Sudoku {
+  /** Possible numbers of a unit */
+  static NUMBER_SEQUENCE = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
   /**
    * Format plain number sequence to rows
-   *
-   * Since the plain Sudoku sequence of numbers consists
-   * of the rows of the Sudoku written side by side, nine
-   * numbers next to each other are cut out and interpreted
-   * as a row.
    * @param plain Plain number sequence of the sudoku.
    * Basically all sudoku rows side by side.
    * @returns Rows of sudoku as two-dimensional array
@@ -25,10 +23,6 @@ class Sudoku {
 
   /**
    * Format plain number sequence to cols
-   *
-   * Creates nine columns with index c. It then fetches
-   * every ninth number plus the column index c and forms
-   * each column.
    * @param plain Plain number sequence of the sudoku.
    * Basically all sudoku rows side by side.
    * @returns Cols of sudoku as two-dimensional array
@@ -50,12 +44,6 @@ class Sudoku {
 
   /**
    * Format plain number sequence to blocks
-   *
-   * Takes every third element as the start index and adds
-   * 27 indices every three blocks. Now it cuts the first
-   * three numbers from the start index. He repeats this
-   * three times and adds nine to the starting index with
-   * each pass.
    * @param plain Plain number sequence of the sudoku.
    * Basically all sudoku rows side by side.
    * @returns Blocks of sudoku as two-dimensional array
