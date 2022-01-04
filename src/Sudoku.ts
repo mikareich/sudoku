@@ -8,7 +8,7 @@ export type DigitSetWithZero = DigitWithZero[]
 
 export interface Cell {
   value: DigitWithZero
-  candidates: DigitSetWithZero
+  candidates: DigitSet
 }
 
 export type Unit = Cell[]
@@ -41,7 +41,7 @@ class Sudoku {
   private static formatUnit(unit: DigitSetWithZero): Unit {
     return unit.map((value) => ({
       value,
-      candidates: Sudoku.DIGIT_SET.filter((digit) => digit !== value),
+      candidates: value === 0 ? Sudoku.DIGIT_SET : [],
     }))
   }
 
