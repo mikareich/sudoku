@@ -115,8 +115,8 @@ class Sudoku {
     return blocks.map(Sudoku.formatUnit)
   }
 
-  /** Plain digit set of the sudoku. Basically all sudoku rows side by side. */
-  public plain: DigitSetWithZero = []
+  /** Plain cells of the sudoku. Basically all sudoku rows side by side. */
+  public plain: Unit = []
 
   /** Rows of sudoku as two-dimensional array */
   public rows: Unit[] = []
@@ -132,7 +132,7 @@ class Sudoku {
    * @param plain Plain digit set of the sudoku. Basically all sudoku rows side by side.
    */
   constructor(plain: DigitSetWithZero) {
-    this.plain = plain
+    this.plain = Sudoku.formatUnit(plain)
 
     this.rows = Sudoku.formatToRows(plain)
     this.cols = Sudoku.formatToCols(plain)

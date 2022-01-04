@@ -31,7 +31,35 @@ class Solver {
     return rowsFilled && colsFilled && blocksFilled
   }
 
-  static EXACT_COVER(sudoku: Sudoku) {}
+  /**
+   * Updates candidates of cells based on the exact cover method
+   *
+   * Updates candidates based on the intersection of the digit candidates of the corresponding units
+   * @param sudoku Sudoku to solve
+   * @returns Updated sudoku
+   */
+  static EXACT_COVER(sudoku: Sudoku): Sudoku {
+    for (let cellIndex = 0; cellIndex < sudoku.plain.length; cellIndex += 1) {
+      const cell = sudoku.plain[cellIndex]
+      // skip if cell is already filled
+      if (cell.value === 0) {
+        const { row, col, block } = sudoku.getUnitsByPlainIndex(cellIndex)
+
+        const rowCandidates = Sudoku.getDigitSet(row)
+        const colCandidates = Sudoku.getDigitSet(col)
+        const blockCandidates = Sudoku.getDigitSet(block)
+
+        cell.candidates = cell.candidates.filter(
+          (candidate) =>
+            !rowCandidates.includes(candidate) &&
+            !colCandidates.includes(candidate) &&
+            !blockCandidates.includes(candidate)
+        )
+      }
+    }
+
+    return sudoku
+  }
 }
 
 export default Solver
