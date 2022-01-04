@@ -12,8 +12,9 @@ class Solver {
   get solved() {
     const { rows, cols, blocks } = this.sudoku
 
-    const sortAndStringify = (arr: Unit) => JSON.stringify(arr.sort())
-    const numberSequenceStringified = JSON.stringify(Sudoku.NUMBER_SEQUENCE)
+    const sortAndStringify = (unit: Unit) =>
+      JSON.stringify(Sudoku.getDigitSet(unit).sort())
+    const numberSequenceStringified = JSON.stringify(Sudoku.DIGIT_SET)
 
     const rowsFilled = rows
       .map(sortAndStringify)
@@ -29,6 +30,8 @@ class Solver {
 
     return rowsFilled && colsFilled && blocksFilled
   }
+
+  static EXACT_COVER(sudoku: Sudoku) {}
 }
 
 export default Solver

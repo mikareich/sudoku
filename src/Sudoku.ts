@@ -1,6 +1,17 @@
-export type DigitSet = (1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9)[]
+export type Digit = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 
-export type DigitSetWithZero = (0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9)[]
+export type DigitWithZero = 0 | Digit
+
+export type DigitSet = Digit[]
+
+export type DigitSetWithZero = DigitWithZero[]
+
+export interface Cell {
+  value: DigitWithZero
+  candidates: DigitSetWithZero
+}
+
+export type Unit = Cell[]
 
 /** Interprets and splits sudoku */
 class Sudoku {
@@ -24,20 +35,39 @@ class Sudoku {
     }
   }
 
+  /** Format digit set to unit
+   * @param digitSet Digit set of the unit
+   */
+  private static formatUnit(unit: DigitSetWithZero): Unit {
+    return unit.map((value) => ({
+      value,
+      candidates: Sudoku.DIGIT_SET.filter((digit) => digit !== value),
+    }))
+  }
+
+  /**
+   * Filters and returns digit set of the unti
+   * @param unit Unit to filter
+   * @returns Digit set of the unit
+   */
+  public static getDigitSet(unit: Unit): DigitSetWithZero {
+    return unit.map((cell) => cell.value)
+  }
+
   /**
    * Format plain digit set to rows
    * @param plain Plain digit set of the sudoku.
    * Basically all sudoku rows side by side.
    * @returns Rows of sudoku as two-dimensional array
    */
-  static formatToRows(plain: DigitSetWithZero): DigitSetWithZero[] {
+  public static formatToRows(plain: DigitSetWithZero): Unit[] {
     // Create rows
     const rows: DigitSetWithZero[] = []
     // Slice always 9 digits from plain array
     for (let i = 0; i < 9; i += 1) {
       rows.push(plain.slice(i * 9, i * 9 + 9))
     }
-    return rows
+    return rows.map(Sudoku.formatUnit)
   }
 
   /**
@@ -46,7 +76,7 @@ class Sudoku {
    * Basically all sudoku rows side by side.
    * @returns Cols of sudoku as two-dimensional array
    */
-  static formatToCols(plain: DigitSetWithZero): DigitSetWithZero[] {
+  public static formatToCols(plain: DigitSetWithZero): Unit[] {
     // Create cols
     const cols: DigitSetWithZero[] = []
     for (let colIndex = 0; colIndex < 9; colIndex += 1) {
@@ -58,7 +88,8 @@ class Sudoku {
 
       cols.push(col)
     }
-    return cols
+
+    return cols.map(Sudoku.formatUnit)
   }
 
   /**
@@ -67,7 +98,7 @@ class Sudoku {
    * Basically all sudoku rows side by side.
    * @returns Blocks of sudoku as two-dimensional array
    */
-  static formatToBlocks(plain: DigitSetWithZero): DigitSetWithZero[] {
+  public static formatToBlocks(plain: DigitSetWithZero): Unit[] {
     const blocks: DigitSetWithZero[] = []
     for (let blockIndex = 0; blockIndex < 9; blockIndex += 1) {
       const blockStartIndex = blockIndex * 3 + Math.floor(blockIndex / 3) * 18
@@ -80,20 +111,21 @@ class Sudoku {
 
       blocks.push(block)
     }
-    return blocks
+
+    return blocks.map(Sudoku.formatUnit)
   }
 
   /** Plain digit set of the sudoku. Basically all sudoku rows side by side. */
   public plain: DigitSetWithZero = []
 
   /** Rows of sudoku as two-dimensional array */
-  public rows: DigitSetWithZero[] = []
+  public rows: Unit[] = []
 
   /** Cols of sudoku as two-dimensional array */
-  public cols: DigitSetWithZero[] = []
+  public cols: Unit[] = []
 
   /** Blocks of sudoku as two-dimensional array */
-  public blocks: DigitSetWithZero[] = []
+  public blocks: Unit[] = []
 
   /**
    * Interprets and splits sudoku
