@@ -6,7 +6,7 @@ Häufig ist es in Zeitschriften und Zeitungen zu finden und es gilt für viele a
 
 Ziel des Spiels ist es, die leeren Felder im Sudoku mit Zahlen von eins bis neun zu füllen. Dabei dürfen die Zahlen pro Zeile, Spalte und Block nur einmal vorkommen.
 
-![Abbildung 1](https://en.wikipedia.org/wiki/Sudoku#/media/File:Sudoku_Puzzle_by_L2G-20050714_standardized_layout.svg)
+![Abbildung 1](https://upload.wikimedia.org/wikipedia/commons/e/e0/Sudoku_Puzzle_by_L2G-20050714_standardized_layout.svg)
 
 # Exact Cover Methode
 
