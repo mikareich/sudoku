@@ -9,7 +9,8 @@
   ],
   "scripts": {
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
