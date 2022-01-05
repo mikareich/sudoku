@@ -1,4 +1,4 @@
-# Sudoku Solver
+# Sudoku
 
 Häufig ist es in Zeitschriften und Zeitungen zu finden und es gilt für viele als knifflige Herausforderung - ein Sudoku. Mit Ursprung in den Vereinigten Staaten wurde es zunächst 1984 in Japan populär, wo es auch seinen heutigen Namen bekam. Mittlerweile ist das Logikrätsel weltbekannt und bietet für viele einen unterhaltsamen Zeitvertreib.
 
