@@ -46,7 +46,7 @@ class Sudoku {
   }
 
   /**
-   * Filters and returns digit set of the unti
+   * Filters and returns digit set of the unit
    * @param unit Unit to filter
    * @returns Digit set of the unit
    */
