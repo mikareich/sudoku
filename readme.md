@@ -12,7 +12,7 @@ Ziel des Spiels ist es, die leeren Felder im Sudoku mit Zahlen von eins bis neun
 
 Mithilfe der Schnittmenge aus den Ziffernkandidaten der entsprechenden Zeile, Spalte und dem Block soll die Ziffer für die Zelle ermittelt werden:
 
-$D={1;2;3;4;5;6;7;8;9}$ Menge der Ziffernkandidaten
+$$D={1;2;3;4;5;6;7;8;9}$$ Menge der Ziffernkandidaten
 
 $Row_1...Row_9$ Ziffernmenge der Zeilen 1 bis 9
 
