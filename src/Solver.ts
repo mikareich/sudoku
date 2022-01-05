@@ -1,5 +1,10 @@
 import Sudoku from './Sudoku'
 
+interface SolverInfo {
+  runtime: number
+  solved: boolean
+  sudoku: Sudoku
+}
 class Solver {
   /** Sudoku to solve */
   public sudoku: Sudoku
@@ -8,8 +13,10 @@ class Solver {
     this.sudoku = sudoku
   }
 
-  async solve(): Promise<Sudoku> {
+  async solve(): Promise<SolverInfo> {
+    const startTimestamp = Date.now()
     while (!this.sudoku.solved) {
+      // use exact cover method to update candidates
       Solver.EXACT_COVER(this.sudoku)
 
       let cellFilled = false
@@ -26,7 +33,10 @@ class Solver {
       if (!cellFilled) throw new Error('No solution found')
     }
 
-    return this.sudoku
+    const endTimestamp = Date.now()
+    const runtime = endTimestamp - startTimestamp
+
+    return { sudoku: this.sudoku, runtime, solved: this.sudoku.solved }
   }
 
   /**

@@ -12,11 +12,15 @@ test('Exact Cover method', () => {
   expect(sudoku.plain[58].candidates).toStrictEqual([3, 5])
 })
 
-test('Sudoku solver', async () => {
+test('Solves sudoku in time', async () => {
+  const maxTime = 1000
+
   const sudoku = new Sudoku(sudokuPlain)
   const solver = new Solver(sudoku)
 
-  await solver.solve()
+  const { runtime, solved } = await solver.solve()
 
+  expect(runtime).toBeLessThan(maxTime)
+  expect(solved).toStrictEqual(true)
   expect(sudoku.plain).toStrictEqual(formatedSudokuPlain)
 })
