@@ -15,5 +15,6 @@ module.exports = {
   rules: {
     'import/no-unresolved': 'off',
     'import/extensions': 'off',
+    'no-param-reassign': ['error', { props: false }],
   },
 }
