@@ -1,4 +1,4 @@
-import Sudoku, { DigitSetWithZero, Unit } from './Sudoku'
+import Sudoku from './Sudoku'
 
 class Solver {
   /** Sudoku to solve */
@@ -6,6 +6,27 @@ class Solver {
 
   constructor(sudoku: Sudoku) {
     this.sudoku = sudoku
+  }
+
+  async solve(): Promise<Sudoku> {
+    while (!this.sudoku.solved) {
+      Solver.EXACT_COVER(this.sudoku)
+
+      let cellFilled = false
+      // fill cells with only one candidate
+      this.sudoku.plain.forEach((cell) => {
+        if (cell.candidates.length === 1) {
+          cellFilled = true
+          // eslint-disable-next-line prefer-destructuring
+          cell.value = cell.candidates[0]
+          cell.candidates = []
+        }
+      })
+
+      if (!cellFilled) throw new Error('No solution found')
+    }
+
+    return this.sudoku
   }
 
   /**
@@ -16,8 +37,7 @@ class Solver {
    * @returns Updated sudoku
    */
   static EXACT_COVER(sudoku: Sudoku): Sudoku {
-    for (let cellIndex = 0; cellIndex < sudoku.plain.length; cellIndex += 1) {
-      const cell = sudoku.plain[cellIndex]
+    sudoku.plain.forEach((cell, cellIndex) => {
       // skip if cell is already filled
       if (cell.value === 0) {
         const { row, col, block } = sudoku.getUnitsByPlainIndex(cellIndex)
@@ -26,14 +46,16 @@ class Solver {
         const colCandidates = Sudoku.getDigitSet(col)
         const blockCandidates = Sudoku.getDigitSet(block)
 
-        cell.candidates = cell.candidates.filter(
+        const candidates = cell.candidates.filter(
           (candidate) =>
             !rowCandidates.includes(candidate) &&
             !colCandidates.includes(candidate) &&
             !blockCandidates.includes(candidate)
         )
+
+        cell.candidates = candidates
       }
-    }
+    })
 
     return sudoku
   }
