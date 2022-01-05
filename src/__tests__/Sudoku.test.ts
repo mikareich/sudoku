@@ -32,19 +32,19 @@ test('Sudoku returns correct untis of cell with given row and col index', () => 
 })
 
 test('Format plain to rows', () => {
-  const rows = Sudoku.formatToRows(sudokuPlain)
+  const { rows } = new Sudoku(sudokuPlain)
 
   expect(rows).toStrictEqual(formatedRows)
 })
 
 test('Format plain to cols', () => {
-  const cols = Sudoku.formatToCols(sudokuPlain)
+  const { cols } = new Sudoku(sudokuPlain)
 
   expect(cols).toStrictEqual(formatedCols)
 })
 
 test('Format plain to blocks', () => {
-  const blocks = Sudoku.formatToBlocks(sudokuPlain)
+  const { blocks } = new Sudoku(sudokuPlain)
 
   expect(blocks).toStrictEqual(formatedBlocks)
 })
